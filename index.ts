@@ -19,11 +19,19 @@ app.post('/login', (req, res)=>{
     if(user == 'nash' && passwd == 890){
         let session = req.session as any;
         session.username= user;
-        res.redirect('/user/lookup')
+        res.json({
+            code : 0,
+            msg : '登录成功'
+        });
+        // res.redirect('/user/lookup')
         //res.sendFile(process.cwd() + "/public/" + "home.html");
     }
     else
-        res.sendFile(process.cwd() + "/public/" + "error.html");
+        res.json({
+            code : -1,
+            msg : '密码错误'
+        })
+        //res.sendFile(process.cwd() + "/public/" + "error.html");
 })
 
 // 加上这个中间件，可以确保下面定义的接口必须登录后才能访问

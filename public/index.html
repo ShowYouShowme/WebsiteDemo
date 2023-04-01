@@ -2,13 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>express表单提交get方法</title>
+    <title>登录页面</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-    <form action="/login" method="post">
-        user: <input type="text" name="user"> <br/>
-        passwd:<input type="text" name="passwd"> <br/>
-        <input type="submit" value="提交">
-    </form>
+    <div>
+        user: <input type="text" name="user" id ="user"> <br/>
+        passwd:<input type="text" name="passwd" id="passwd"> <br/>
+        <button id="btn1">登录</button>
+    </div>
+
+    <script>
+        $("#btn1").click(function () {
+            var user = $("#user").val();
+            var passwd = $("#passwd").val();
+            console.log(`user = ${user}, passwd = ${passwd}`);
+            $.ajax({
+                    url:"/login",
+                    type:"post",
+                    data:{
+                        user,
+                        passwd
+                    },
+                    dataType:"json",// 响应的数据类型
+                    success:function (data) {
+                        console.info(`response = ${JSON.stringify(data)}`);
+                        let {code, msg} = data;
+                        console.info(`code = ${code}, msg = ${msg}`);
+                        if(code == 0){
+                            window.location.href = '/home.html';
+                        }else{
+                            alert('密码错误, 请重新输入!');
+                        }
+                    },
+                    error:function () {
+                        console.log("请求失败")
+                    }
+                })
+        })
+    </script>
 </body>
 </html>

@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>home</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-    <p1>你已经登录到home!</p1>
+    <p1>这里是主页!</p1> <br>
+    <textarea rows="10" cols="30" id ="panel">
+    </textarea>
+    <br>
+    <button id="btn1">查询</button>
+    <script>
+        $("#btn1").click(function () {
+            $.ajax({
+                    url:"/user/lookup",
+                    type:"get",
+                    dataType:"json",// 响应的数据类型
+                    success:function (data) {
+                        console.info(`response = ${JSON.stringify(data)}`);
+                        $("#panel").val(JSON.stringify(data));
+                    },
+                    error:function () {
+                        console.log("请求失败")
+                    }
+                })
+        })
+    </script>
 </body>
 </html>
